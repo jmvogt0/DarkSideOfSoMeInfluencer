@@ -9,163 +9,204 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Sacramento&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sacramento&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sacramento&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
 
-<style>
+  <style>
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
 
- #container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
- }
-  #VideoContainer {
-    margin: 0px auto;
-    width: 80%;
-    height: 80vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    border-radius: 24px;
-  }
+    #VideoContainer {
+      margin: 0px auto;
+      width: 80%;
+      height: 80vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      border-radius: 24px;
+    }
 
-  #videoElement {
-    height: 100%;
-    background-color: #666;
-    transform: scaleX(-1);
-  }
+    #videoElement {
+      height: 100%;
+      background-color: #666;
+      transform: scaleX(-1);
+    }
 
-  h1 {
-    font-size: 80px;
-    font-family: "Sacramento", cursive;
-    font-weight: 400;
-    font-style: normal;
-    margin-bottom: 8px;
-  }
+    h1 {
+      font-size: 80px;
+      font-family: "Sacramento", cursive;
+      font-weight: 400;
+      font-style: normal;
+      margin-bottom: 8px;
+    }
 
-  p {
-    font-size: 32px;
-    margin: 8px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  #log {
-    margin-top: 20px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-  }
-
-  #overlay {
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -80%);
-    width: 80%;
-    
-    color: white;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 64px;
-    display: none; /* Anfangs ausgeblendet */
-    flex-direction: column;
-    align-items: center;
     p {
-      font-size: 48px;
-      background: rgba(0, 0, 0, 1.0);
-      border-radius: 12px;
-      text-align: center;
-      padding: 8px;
-      width: fit-content;
+      font-size: 32px;
+      margin: 8px;
       font-family: "Poppins", sans-serif;
       font-weight: 400;
       font-style: normal;
     }
-  }
-</style>
 
-<div id="container">
-  <h1>#FlawlessYou</h1>
-  <p>Entdecke den Beauty-Filter, der</p>
-  <p>alles verändert.</p>
-  <div id="VideoContainer">
-    <video autoplay="true" muted playsinline id="videoElement"></video>
-    <div id="overlay">
-      <p>
-        Wozu ein Filter?
-      </p>
-      <p>
-        Du bist doch schon
-      </p>
-      <p>
-        perfekt.
-      </p>
-    </div>
-  </div>
-  <div id="log">Initializing...</div>
-</div>
-
-<script>
-  const video = document.querySelector("#videoElement");
-  const log = document.getElementById("log");
-  const overlay = document.getElementById("overlay");
-
-  video.setAttribute('autoplay', '');
-  video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
-
-  // Zugriff auf die Webcam
-  if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function (stream) {
-        video.srcObject = stream;
-      })
-      .catch(function (err0r) {
-        console.log("Something went wrong!");
-        log.textContent = "Unable to access webcam.";
-      });
-  }
-
-  // TensorFlow.js COCO-SSD Modell laden
-  let model;
-  let timeoutId; // Timeout für das Einblenden des Overlays
-  cocoSsd.load().then(loadedModel => {
-    model = loadedModel;
-    log.textContent = "Model loaded. Detecting...";
-    analyzeFrame(); // Starte die Analyse
-  });
-
-  // Analyse der Videoframes
-  function analyzeFrame() {
-    if (video.readyState === video.HAVE_ENOUGH_DATA && model) {
-      model.detect(video).then(predictions => {
-        const personDetected = predictions.some(p => p.class === 'person');
-        if (personDetected) {
-          log.textContent = "";
-          if (!timeoutId) { // Sicherstellen, dass der Timeout nur einmal gesetzt wird
-            timeoutId = setTimeout(() => {
-              overlay.style.display = "flex"; // Overlay sichtbar machen
-            }, 2000);
-          }
-        } else {
-          log.textContent = "";
-          overlay.style.display = "none"; // Overlay ausblenden, falls keine Person
-          clearTimeout(timeoutId); // Timeout zurücksetzen
-          timeoutId = null;
-        }
-      });
+    #log {
+      margin-top: 20px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
     }
-    requestAnimationFrame(analyzeFrame); // Wiederhole die Analyse für den nächsten Frame
-  }
-</script>
+
+    #overlay {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -80%);
+      width: 80%;
+
+      color: white;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 64px;
+      display: none;
+      /* Anfangs ausgeblendet */
+      flex-direction: column;
+      align-items: center;
+
+      p {
+        font-size: 48px;
+        background: rgba(0, 0, 0, 1.0);
+        border-radius: 12px;
+        text-align: center;
+        padding: 8px;
+        width: fit-content;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+    }
+
+    footer {
+
+      .logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+      .logo1 {
+        height: 64px;
+        width: auto;
+      }
+      .logo2 {
+        height: 64px;
+        width: auto;
+      }
+        img {
+          width: 64px;
+          margin: 0 8px;
+        }
+      }
+
+      p {
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+  </style>
+
+  <div id="container">
+    <h1>#FlawlessYou</h1>
+    <p>Entdecke den Beauty-Filter, der</p>
+    <p>alles verändert.</p>
+    <div id="VideoContainer">
+      <video autoplay="true" muted playsinline id="videoElement"></video>
+      <div id="overlay">
+        <p>
+          Wozu ein Filter?
+        </p>
+        <p>
+          Du bist doch schon
+        </p>
+        <p>
+          perfekt.
+        </p>
+      </div>
+    </div>
+    <div id="log">Initializing...</div>
+    <footer>
+      <div class="logos">
+        <img class="logo1" src="./InstaLogo.png">
+        <img class="logo2" src="./Insta2x2.png">
+      </div>
+      <p>#NextLevelYou</p>
+
+    </footer>
+  </div>
+
+  <script>
+    const video = document.querySelector("#videoElement");
+    const log = document.getElementById("log");
+    const overlay = document.getElementById("overlay");
+
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+
+    // Zugriff auf die Webcam
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (err0r) {
+          console.log("Something went wrong!");
+          log.textContent = "Unable to access webcam.";
+        });
+    }
+
+    // TensorFlow.js COCO-SSD Modell laden
+    let model;
+    let timeoutId; // Timeout für das Einblenden des Overlays
+    cocoSsd.load().then(loadedModel => {
+      model = loadedModel;
+      log.textContent = "Model loaded. Detecting...";
+      analyzeFrame(); // Starte die Analyse
+    });
+
+    // Analyse der Videoframes
+    function analyzeFrame() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA && model) {
+        model.detect(video).then(predictions => {
+          const personDetected = predictions.some(p => p.class === 'person');
+          if (personDetected) {
+            log.textContent = "";
+            if (!timeoutId) { // Sicherstellen, dass der Timeout nur einmal gesetzt wird
+              timeoutId = setTimeout(() => {
+                overlay.style.display = "flex"; // Overlay sichtbar machen
+              }, 2000);
+            }
+          } else {
+            log.textContent = "";
+            overlay.style.display = "none"; // Overlay ausblenden, falls keine Person
+            clearTimeout(timeoutId); // Timeout zurücksetzen
+            timeoutId = null;
+          }
+        });
+      }
+      requestAnimationFrame(analyzeFrame); // Wiederhole die Analyse für den nächsten Frame
+    }
+  </script>
 
 </body>
+
 </html>
