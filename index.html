@@ -50,7 +50,7 @@
 </style>
 
 <div id="container">
-  <video autoplay="true" id="videoElement"></video>
+  <video autoplay="true" muted playsinline id="videoElement"></video>
   <div id="overlay">Hier bist du</div>
 </div>
 <div id="log">Initializing...</div>
@@ -59,6 +59,10 @@
   const video = document.querySelector("#videoElement");
   const log = document.getElementById("log");
   const overlay = document.getElementById("overlay");
+
+  video.setAttribute('autoplay', '');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
 
   // Zugriff auf die Webcam
   if (navigator.mediaDevices.getUserMedia) {
