@@ -42,6 +42,12 @@
 
   }
 
+  p {
+    font-size: 32px;
+    margin: 8px;
+
+  }
+
   #log {
     margin-top: 20px;
     text-align: center;
@@ -51,16 +57,22 @@
 
   #overlay {
     position: absolute;
-    top: 50%;
+    top: 80%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.7);
+    transform: translate(-50%, -80%);
+    width: 80%;
+    
     color: white;
-    padding: 10px 20px;
     border-radius: 5px;
     font-family: Arial, sans-serif;
-    font-size: 24px;
+    text-align: center;
+    font-size: 64px;
     display: none; /* Anfangs ausgeblendet */
+    p {
+      font-size: 48px;
+      background: rgba(0, 0, 0, 1.0);
+      border-radius: 12px;
+    }
   }
 </style>
 
@@ -70,7 +82,14 @@
   <p>alles verändert</p>
   <div id="VideoContainer">
     <video autoplay="true" muted playsinline id="videoElement"></video>
-    <div id="overlay">Hier bist du</div>
+    <div id="overlay">
+      <p>
+        Wozu ein Filter?
+      </p>
+      <p>
+        Du bist schon perfekt!
+      </p>
+    </div>
   </div>
   <div id="log">Initializing...</div>
 </div>
@@ -111,14 +130,14 @@
       model.detect(video).then(predictions => {
         const personDetected = predictions.some(p => p.class === 'person');
         if (personDetected) {
-          log.textContent = "Person detected!";
+          log.textContent = "";
           if (!timeoutId) { // Sicherstellen, dass der Timeout nur einmal gesetzt wird
             timeoutId = setTimeout(() => {
               overlay.style.display = "block"; // Overlay sichtbar machen
             }, 2000);
           }
         } else {
-          log.textContent = "No person detected.";
+          log.textContent = "";
           overlay.style.display = "none"; // Overlay ausblenden, falls keine Person
           clearTimeout(timeoutId); // Timeout zurücksetzen
           timeoutId = null;
