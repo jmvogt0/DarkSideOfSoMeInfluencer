@@ -11,20 +11,35 @@
 <body>
 
 <style>
-  #container {
-    margin: 0px auto;
-    width: 100%;
+
+ #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
+    font-family: Arial, sans-serif;
+ }
+  #VideoContainer {
+    margin: 0px auto;
+    width: 80%;
+    height: 80vh;
     overflow: hidden;
     display: flex;
     justify-content: center;
     position: relative;
+    border-radius: 24px;
   }
 
   #videoElement {
-    height: 100vh;
+    height: 100%;
     background-color: #666;
     transform: scaleX(-1);
+  }
+
+  h1 {
+    font-size: 64px;
+
   }
 
   #log {
@@ -50,10 +65,15 @@
 </style>
 
 <div id="container">
-  <video autoplay="true" muted playsinline id="videoElement"></video>
-  <div id="overlay">Hier bist du</div>
+  <h1>FlawlessYou</h1>
+  <p>Entdecke den Beauty-Filter, der</p>
+  <p>alles verändert</p>
+  <div id="VideoContainer">
+    <video autoplay="true" muted playsinline id="videoElement"></video>
+    <div id="overlay">Hier bist du</div>
+  </div>
+  <div id="log">Initializing...</div>
 </div>
-<div id="log">Initializing...</div>
 
 <script>
   const video = document.querySelector("#videoElement");
