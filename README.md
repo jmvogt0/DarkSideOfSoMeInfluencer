@@ -1,2 +1,2 @@
 # DarkSideOfSoMeInfluencer
-![Alt text](blob/main/img/1.png "Title")
+![Alt text](DarkSideOfSoMeInfluencer/blob/main/img/1.png "Title")
